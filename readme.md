@@ -1,4 +1,4 @@
-# Lab 5: ToDo List CRUD
+# Lab 5: Products CRUD
 
 
 
