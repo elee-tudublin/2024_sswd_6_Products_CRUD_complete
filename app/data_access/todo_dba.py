@@ -43,13 +43,19 @@ def dataUpdateTodo(todo) :
     
 
 def dataDeleteTodo(id : int) :
-    result : bool = True
-    try:
-        del todos_list[id - 1]
-        print('deleted item with index: ' + str(id-1))
-    except:
-        print('error deleting item with index: ' + str(id-1))
-        result = False
+    result : bool = False
 
-    return result
+    for i, todo in enumerate(todos_list) :
+        if (todos_list[i].id == id) :
+            del todos_list[i]
+            result = True
+
+    #try:
+    #    del todos_list[id - 1]
+    #    print('deleted item with index: ' + str(id-1))
+    #except:
+    #    print('error deleting item with index: ' + str(id-1))
+    #    result = False
+
+    #return result
 

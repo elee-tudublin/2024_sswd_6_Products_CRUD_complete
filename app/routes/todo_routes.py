@@ -17,19 +17,19 @@ templates = Jinja2Templates(directory="app/view_templates")
 # handle http get requests for the site root /
 # return the todos page
 @router.get("/", response_class=HTMLResponse)
-async def todos(request: Request, filter : str | None = "all"):
+async def getTodos(request: Request, filter : str | None = "all"):
 
     # note passing of parameters to the page
     return templates.TemplateResponse("todo/todos.html", {"request": request, "todoList": getAllTodos(), "filter": "all" })
 
 @router.get("/update/{id}", response_class=HTMLResponse)
-async def todos(request: Request, id: int):
+async def getTodo(request: Request, id: int):
 
     # note passing of parameters to the page
     return templates.TemplateResponse("todo/partials/todo_update_form.html", {"request": request, "todo": getTodo(id) })
 
 @router.get("/filter/{filter}", response_class=HTMLResponse)
-async def todos(request: Request, filter: str):
+async def getTodosFilter(request: Request, filter: str):
 
     # note passing of parameters to the page
     return templates.TemplateResponse("todo/partials/todo_list.html", {"request": request, "todoList": getAllTodos(), "filter": filter   })
@@ -37,20 +37,20 @@ async def todos(request: Request, filter: str):
 
 
 @router.post("/")
-def add_item(request: Request, item: str = Form(...)):
+def postTodo(request: Request, item: str = Form(...)):
 
     # get item value from the form POST data
     new_todo = addTodo(item)
     return templates.TemplateResponse("todo/partials/todo_li.html", {"request": request, "todo": new_todo})
 
 @router.put("/")
-def update_item(request: Request, id: Annotated[int, Form()], details: Annotated[str, Form()], completed: Annotated[str, Form()] = ""):
+def putTodo(request: Request, id: Annotated[int, Form()], details: Annotated[str, Form()], completed: Annotated[str, Form()] = ""):
     # get item value from the form POST data
 
     up_todo = updateTodo(id, details, completed)
     return templates.TemplateResponse("todo/partials/todo_li.html", {"request": request, "todo": up_todo})
 
 @router.delete("/{id}")
-def delete_item(request: Request, id: int):
+def delToto(request: Request, id: int):
     deleteTodo(id)
-    return templates.TemplateResponse("todo/partials/todo_list.html", {"request": request, "todoList": getAllTodos() })
+    return templates.TemplateResponse("todo/partials/todo_list.html", {"request": request, "todoList": getAllTodos(), "filter": "all" })
